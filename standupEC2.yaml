@@ -1,0 +1,47 @@
+# standup an AWS ec2 instance in all AWS regions in a VPC with one subnet
+# and a public IP address
+Resources:
+  ec2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: XXXXXXXXXXXXXXXXXXXXX
+      InstanceType: t2.micro
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: '0'
+          GroupSet:
+            - !Ref 'securityGroup'
+          SubnetId: !Ref 'subnet'
+      Tags:
+        - Key: Name
+          Value: !Ref 'AWS::StackName'
+
+  securityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: '22'
+          IpProtocol: tcp
+          ToPort: '22'
+
+  vpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+
+  subnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref 'vpc'
+      CidrBlock: 10.0.0.0/24
+
+
+
+
+
+
+
