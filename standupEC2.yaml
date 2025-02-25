@@ -10,11 +10,11 @@ Resources:
         - AssociatePublicIpAddress: true
           DeviceIndex: '0'
           GroupSet:
-            - !Ref 'securityGroup'
-          SubnetId: !Ref 'subnet'
+            - !Ref securityGroup
+          SubnetId: !Ref subnet
       Tags:
         - Key: Name
-          Value: !Ref 'AWS::StackName'
+          Value: !Ref AWS::StackName
 
   securityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -36,12 +36,5 @@ Resources:
   subnet:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref 'vpc'
+      VpcId: !Ref vpc
       CidrBlock: 10.0.0.0/24
-
-
-
-
-
-
-
